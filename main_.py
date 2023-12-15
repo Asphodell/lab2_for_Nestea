@@ -1,6 +1,7 @@
 import sqlite3
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
+import os
 
 import tkinter as tk
 from tkinter import filedialog, messagebox
@@ -18,7 +19,7 @@ class Ui_MainWindow(object):
         self.cursor = None
         
         self.name = "First"
-        self.db = "Database"
+        self.db = ""
         
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -127,9 +128,9 @@ class Ui_MainWindow(object):
         self.pushButton_8.setText(_translate("MainWindow", "Создать back-up "))
         self.pushButton_9.setText(_translate("MainWindow", "Загрузить из back-up"))
         self.label.setText(_translate("MainWindow", "id"))
-        self.label_2.setText(_translate("MainWindow", "car"))
-        self.label_3.setText(_translate("MainWindow", "year"))
-        self.label_4.setText(_translate("MainWindow", "price"))
+        self.label_2.setText(_translate("MainWindow", "name"))
+        self.label_3.setText(_translate("MainWindow", "age"))
+        self.label_4.setText(_translate("MainWindow", "email"))
         self.pushButton_10.setText(_translate("MainWindow", "Импорт БД"))
 
     def create_btn_command(self):
@@ -137,7 +138,7 @@ class Ui_MainWindow(object):
         self.connection = sqlite3.connect(db_file)
         self.cursor = self.connection.cursor()
 
-        fields = ["id INTEGER PRIMARY KEY", "car TEXT", "year INTEGER", "price REAL"]
+        fields = ["id INTEGER PRIMARY KEY", "name TEXT", "age INTEGER", "email TEXT"]
 
         fields_str = ", ".join(fields)
         
@@ -151,7 +152,9 @@ class Ui_MainWindow(object):
 
     def open_btn_command(self):
         db_file = filedialog.askopenfilename(filetypes=[("SQLite Database Files", "*.db")])
-
+        
+        self.db = os.path.basename(db_file)
+        print(self.db)
         if db_file:
             self.connection = sqlite3.connect(db_file)
             self.cursor = self.connection.cursor()

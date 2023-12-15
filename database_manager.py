@@ -69,7 +69,7 @@ class DatabaseManager:
     def create_backup(self):
         db = self.db
 
-        shutil.copyfile(db + ".db", "backup_" + db + ".db")
+        shutil.copyfile(db, "backup_" + db)
 
     def import_to_csv(self):
         cursor = self.cursor
